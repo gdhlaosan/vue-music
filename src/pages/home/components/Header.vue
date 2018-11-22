@@ -12,9 +12,12 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import '~@/assets/styles/variable.styl'
 .header
-	height 0.8rem
-	line-height 0.8rem
+	height 1.28rem
+	line-height 1.28rem
 	text-align center
-	font-size 0.4rem
+	font-size 0.5rem
+	background-color $baseColor
+	color $textColor
 </style>

@@ -2,6 +2,7 @@
 	<div class="home">
 		<home-header></home-header>
 		<home-tab></home-tab>
+		<router-view></router-view>
 	</div>
 </template>
 
