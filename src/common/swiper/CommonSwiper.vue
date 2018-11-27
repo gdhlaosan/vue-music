@@ -1,6 +1,6 @@
 <template>
 	<div class="wrapper">
-		<swiper :options="swiperOption">
+		<swiper :options="swiperOption" v-if="sliderList.length">
 		    <swiper-slide 
 		    	v-for="item in sliderList" 
 		    	:key="item.id"
@@ -23,17 +23,21 @@ export default {
 	data() {
 		return {
 			swiperOption: {
-				loop: true
+				pagination: '.swiper-pagination',
+				loop: true,
+				autoplay: 2000,
+				autoplayDisableOnInteraction: false
 			}
 		}
-	},
-	mounted() {
-
 	}
 }
 </script>
 
 <style lang="stylus" scoped>
+.wrapper >>> .swiper-pagination-bullet-active
+	width 0.32rem
+	border-radius 0.16rem
+	background #fff
 .wrapper
 	overflow hidden
 	height 0

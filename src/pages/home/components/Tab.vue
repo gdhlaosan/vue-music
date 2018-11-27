@@ -38,7 +38,7 @@ export default {
 			display inline-block
 			height 0.8rem
 			margin-top -0.1rem
-			border-bottom 0.02rem solid #fff
+			border-bottom 0.02rem solid #eee
 		&.router-link-active
 			.tab-item-text
 				color $baseColor
