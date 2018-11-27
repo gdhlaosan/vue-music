@@ -20,7 +20,7 @@ export default {
 	props: {
 		sliderList: Array
 	},
-	data() {
+	data () {
 		return {
 			swiperOption: {
 				pagination: '.swiper-pagination',

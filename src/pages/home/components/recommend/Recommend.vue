@@ -17,6 +17,7 @@
 	import CommonSwiper from '@/common/swiper/CommonSwiper'
 	import RecommendList from './components/RecommendList'
 
+
 	export default {
 		name: 'HomeRecommend',
 		components: {
