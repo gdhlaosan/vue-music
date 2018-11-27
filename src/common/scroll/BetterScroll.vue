@@ -1,8 +1,6 @@
 <template>
-	<div ref="wrapper">
-		<div>
-			<slot></slot>
-		</div>
+	<div class="scrollWrapper" ref="wrapper">
+		<slot></slot>
 	</div>
 </template>
 
@@ -11,19 +9,33 @@
 	export default {
 		name: 'BetterScroll',
 		props: {
+			probeType: {
+				type: Number,
+				default: 1
+			},
+			click: {
+				type: Boolean,
+				default: true
+			},
 			data: {
-					type: Array,
-					default: null
-				}
+				type: Array,
+				default: null
+			}
 		},
 		mounted() {
-			this._initScroll()
+			setTimeout(() => {
+				this._initScroll()
+			})
 		},
 		methods: {
 			_initScroll() {
-				setTimeout(() => {
-					this.scroll = new BScroll(this.$refs.wrapper)
-				}, 20)
+				if(!this.$refs.wrapper) {
+					return
+				}
+				this.scroll = new BScroll(this.$refs.wrapper, {
+					probeType: this.probeType,
+					click: this.click
+				})
 			},
 			_refresh() {
 				this.scroll && this.scroll.refresh()
@@ -33,12 +45,13 @@
 			data() {
 				setTimeout(() => {
 					this._refresh()
-				})
+				}, 20)
 			}
 		}
 	}
 </script>
 
 <style lang="stylus" scoped>
-	
+.scrollWrapper
+	height 100%
 </style>

@@ -1,8 +1,10 @@
 <template>
 	<div class="recommend">
 		<better-scroll :data="discList">
-			<common-swiper :sliderList="sliderList"></common-swiper>
-			<recommend-list :discList="discList"></recommend-list>
+			<div>
+				<common-swiper :sliderList="sliderList"></common-swiper>
+				<recommend-list :discList="discList"></recommend-list>
+			</div>
 		</better-scroll>
 	</div>
 </template>
@@ -28,7 +30,7 @@
 				discList: []
 			}
 		},
-		created() {
+		mounted() {
 			this._getRecommendInfo()
 			this._getDiscList()
 		},
@@ -55,5 +57,9 @@
 </script>
 
 <style lang="stylus" scoped>
-
+.recommend
+	width 100%
+	position absolute
+	top 2.1rem
+	bottom 0
 </style>

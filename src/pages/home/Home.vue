@@ -1,10 +1,12 @@
 <template>
 	<div class="home">
-		<home-header></home-header>
-		<home-tab></home-tab>
-		<!-- <keep-alive> -->
+		<div class="head-wrapper">
+			<home-header></home-header>
+			<home-tab></home-tab>
+		</div>
+		<keep-alive>
 			<router-view></router-view>
-		<!-- </keep-alive> -->
+		</keep-alive>
 	</div>
 </template>
 
@@ -21,5 +23,7 @@ export default {
 </script>
 
 <style lang="stylus">
-  
+.head-wrapper
+	position relative
+	z-index 100
 </style>
