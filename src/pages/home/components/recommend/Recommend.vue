@@ -1,12 +1,10 @@
 <template>
-	<div class="recommend">
-		<better-scroll :data="discList">
-			<div>
-				<common-swiper :sliderList="sliderList"></common-swiper>
-				<recommend-list :discList="discList"></recommend-list>
-			</div>
-		</better-scroll>
-	</div>
+	<better-scroll :data="discList" class="recommend">
+		<div>
+			<common-swiper :sliderList="sliderList"></common-swiper>
+			<recommend-list :discList="discList"></recommend-list>
+		</div>
+	</better-scroll>
 </template>
 
 <script>
@@ -60,7 +58,7 @@
 <style lang="stylus" scoped>
 .recommend
 	width 100%
-	position absolute
+	position fixed
 	top 2.1rem
 	bottom 0
 </style>

@@ -1,21 +1,29 @@
 <template>
-	<div class="singer">
+	<scroll :data="singerList" class="singer" ref="scrollWrapper">
 		<div class="wrapper">
-			<div class="items-wrapper" v-for="value in singerList" :key="value.title">
+			<div class="items-wrapper" v-for="value in singerList" :key="value.title" ref="itemsGroup">
 				<div class="title">{{value.title}}</div>
 				<ul>
 					<li class="item" v-for="item in value.items" :key="item.id">
-						{{item.name}}
+						<img v-lazy="item.avatar" alt="">
+						<span class="item-name">{{item.name}}</span>
 					</li>
 				</ul>
 			</div>
 		</div>
-	</div>
+		<div class="shortCut">
+			<ul @touchstart="shortCutTouchStart">
+				<li class="shortCutItem" v-for="(key, index) in shortCutList" :key="key" :data-index="index">{{key}}</li>
+			</ul>
+		</div>
+	</scroll>
 </template>
 
 <script>
 import { getSingerList } from '@/api/singer'
 import { ERR_OK } from '@/api/config'
+import Singer from '@/assets/class/index'
+import Scroll from '@/common/scroll/BetterScroll'
 
 const HOT_NAME = '热门'
 const HOT_LIST_LEN = 10
@@ -25,6 +33,16 @@ export default {
 	data() {
 		return {
 			singerList: []
+		}
+	},
+	components: {
+		Scroll
+	},
+	computed: {
+		shortCutList() {
+			return this.singerList.map((item, index) => {
+				return item.title.substring(0, 1)
+			})
 		}
 	},
 	mounted() {
@@ -48,11 +66,10 @@ export default {
 			list.forEach((item, index) => {
 				//热门归类（取前十条）
 				if(index < HOT_LIST_LEN) {
-					map.hot.items.push({
-						id: item.Fsinger_id,
-						name: item.Fsinger_name,
-						avatar: `https://y.gtimg.cn/music/photo_new/T001R150x150M000${item.Fsinger_mid}.jpg?max_age=2592000`
-					})
+					map.hot.items.push(new Singer({
+						id: item.Fsinger_mid,
+						name: item.Fsinger_name
+					}))
 				}
 				//歌手归类
 				let key = item.Findex
@@ -62,11 +79,10 @@ export default {
 						items: []
 					}
 				}
-				map[key].items.push({
-					id: item.Fsinger_id,
-					name: item.Fsinger_name,
-					avatar: `https://y.gtimg.cn/music/photo_new/T001R150x150M000${item.Fsinger_mid}.jpg?max_age=2592000`
-				})
+				map[key].items.push(new Singer({
+						id: item.Fsinger_mid,
+						name: item.Fsinger_name
+					}))
 			})
 			this.singerList = map
 			//对map进行数据处理
@@ -84,6 +100,11 @@ export default {
 				return a.title.charCodeAt(0) - b.title.charCodeAt(0)
 			})
 			return hot.concat(ret)
+		},
+		shortCutTouchStart(e) {
+			let target = e.target
+			let index = target.getAttribute('data-index')
+			this.$refs.scrollWrapper.scroll.scrollToElement(this.$refs.itemsGroup[index])
 		}
 	}
 }
@@ -95,8 +116,32 @@ export default {
 		top 2.1rem
 		bottom 0
 		width 100%
-		.title
-			line-height 0.6rem
-			background-color #eee
-			padding 0 0.2rem
+		.items-wrapper
+			padding-bottom 0.3rem
+			.title
+				line-height 0.6rem
+				background-color #eee
+				padding 0 0.2rem
+			.item
+				padding 0.3rem 0 0 0.4rem
+				img
+					width 1.0rem
+					height 1.0rem
+					border-radius 100%
+				.item-name
+					font-size 0.32rem
+					margin-left 0.2rem
+	.shortCut
+		position absolute
+		width 0.3rem
+		top 50%
+		right 0
+		transform translateY(-50%)
+		color #d43c33
+		border-radius 0.2rem
+		.shortCutItem
+			text-align center
+			line-height 0.30rem
+			font-size 0.24rem
+		
 </style>

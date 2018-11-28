@@ -25,7 +25,7 @@
 		mounted() {
 			setTimeout(() => {
 				this._initScroll()
-			})
+			}, 20)
 		},
 		methods: {
 			_initScroll() {
@@ -52,6 +52,5 @@
 </script>
 
 <style lang="stylus" scoped>
-.scrollWrapper
-	height 100%
+
 </style>
