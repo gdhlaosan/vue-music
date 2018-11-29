@@ -12,7 +12,7 @@
 			</div>
 		</div>
 		<div class="shortCut">
-			<ul @touchstart="shortCutTouchStart">
+			<ul @touchstart.stop.prevent="shortCutTouchStart" @touchmove.stop.prevent="shortCutTouchMove">
 				<li class="shortCutItem" v-for="(key, index) in shortCutList" :key="key" :data-index="index">{{key}}</li>
 			</ul>
 		</div>
@@ -30,7 +30,7 @@ const HOT_LIST_LEN = 10
 
 export default {
 	name: 'HomeSinger',
-	data() {
+	data () {
 		return {
 			singerList: []
 		}
@@ -39,24 +39,24 @@ export default {
 		Scroll
 	},
 	computed: {
-		shortCutList() {
+		shortCutList () {
 			return this.singerList.map((item, index) => {
 				return item.title.substring(0, 1)
 			})
 		}
 	},
-	mounted() {
+	mounted () {
 		this._getSingerList()
 	},
 	methods: {
-		_getSingerList() {
+		_getSingerList () {
 			getSingerList().then((res) => {
-				if(res.code === ERR_OK) {
+				if (res.code === ERR_OK) {
 					this.singerList = this._normalizeList(res.data.list)
 				}
 			})
 		},
-		_normalizeList(list) {
+		_normalizeList (list) {
 			let map = {
 				hot: {
 					title: HOT_NAME,
@@ -64,16 +64,16 @@ export default {
 				}
 			}
 			list.forEach((item, index) => {
-				//热门归类（取前十条）
-				if(index < HOT_LIST_LEN) {
+				// 热门归类（取前十条）
+				if (index < HOT_LIST_LEN) {
 					map.hot.items.push(new Singer({
 						id: item.Fsinger_mid,
 						name: item.Fsinger_name
 					}))
 				}
-				//歌手归类
+				// 歌手归类
 				let key = item.Findex
-				if(!map[key]) {
+				if (!map[key]) {
 					map[key] = {
 						title: key,
 						items: []
@@ -85,14 +85,14 @@ export default {
 					}))
 			})
 			this.singerList = map
-			//对map进行数据处理
+			// 对map进行数据处理
 			let hot = []
 			let ret = []
-			for(let key in map) {
+			for (let key in map) {
 				let val = map[key]
-				if(val.title.match(/[a-zA-Z]/)) {
+				if (val.title.match(/[a-zA-Z]/)) {
 					ret.push(val)
-				}else if(val.title === HOT_NAME) {
+				} else if (val.title === HOT_NAME) {
 					hot.push(val)
 				}
 			}
@@ -101,10 +101,13 @@ export default {
 			})
 			return hot.concat(ret)
 		},
-		shortCutTouchStart(e) {
+		shortCutTouchStart (e) {
 			let target = e.target
 			let index = target.getAttribute('data-index')
 			this.$refs.scrollWrapper.scroll.scrollToElement(this.$refs.itemsGroup[index])
+		},
+		shortCutTouchMove () {
+
 		}
 	}
 }
@@ -143,5 +146,4 @@ export default {
 			text-align center
 			line-height 0.30rem
 			font-size 0.24rem
-		
 </style>
