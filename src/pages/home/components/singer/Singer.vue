@@ -106,8 +106,10 @@ export default {
 			let index = target.getAttribute('data-index')
 			this.$refs.scrollWrapper.scroll.scrollToElement(this.$refs.itemsGroup[index])
 		},
-		shortCutTouchMove () {
+		shortCutTouchMove (e) {
+			let target = e.currentTarget
 
+			// this.$refs.scrollWrapper.scroll.scrollToElement(this.$refs.itemsGroup[currentargetIndex])
 		}
 	}
 }
