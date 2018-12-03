@@ -1,5 +1,11 @@
 <template>
-	<scroll :data="singerList" class="singer" ref="scrollWrapper">
+	<scroll 
+		:data="singerList" 
+		class="singer" 
+		ref="scrollWrapper" 
+		:listenScroll="listenScroll"
+		@scroll="scroll"
+	>
 		<div class="wrapper">
 			<div class="items-wrapper" v-for="value in singerList" :key="value.title" ref="itemsGroup">
 				<div class="title">{{value.title}}</div>
@@ -13,7 +19,12 @@
 		</div>
 		<div class="shortCut">
 			<ul @touchstart.stop.prevent="shortCutTouchStart" @touchmove.stop.prevent="shortCutTouchMove">
-				<li class="shortCutItem" v-for="(key, index) in shortCutList" :key="key" :data-index="index">{{key}}</li>
+				<li class="shortCutItem" 
+					v-for="(key, index) in shortCutList" 
+					:key="key" 
+					:data-index="index"
+					:class="{heightLight: isHeightLightIndex == index}"
+				>{{key}}</li>
 			</ul>
 		</div>
 	</scroll>
@@ -32,7 +43,11 @@ export default {
 	name: 'HomeSinger',
 	data () {
 		return {
-			singerList: []
+			singerList: [], //歌手列表
+			touch: {}, 
+			heightArr: [], //高度列表
+			listenScroll: true, //scroll是否滚动
+			isHeightLightIndex: 0
 		}
 	},
 	components: {
@@ -47,6 +62,12 @@ export default {
 	},
 	mounted () {
 		this._getSingerList()
+		this._countHeights()
+	},
+	watch: {
+		singerList() {
+			this._countHeights()
+		}
 	},
 	methods: {
 		_getSingerList () {
@@ -104,12 +125,40 @@ export default {
 		shortCutTouchStart (e) {
 			let target = e.target
 			let index = target.getAttribute('data-index')
-			this.$refs.scrollWrapper.scroll.scrollToElement(this.$refs.itemsGroup[index])
+			this.touch.targetStartPageY = e.touches[0].pageY
+			this.touch.deltaIndex = index
+			this.$refs.scrollWrapper.scroll.scrollToElement(this.$refs.itemsGroup[index], 500)
 		},
 		shortCutTouchMove (e) {
-			let target = e.currentTarget
-
-			// this.$refs.scrollWrapper.scroll.scrollToElement(this.$refs.itemsGroup[currentargetIndex])
+			let target = e.target
+			var targetMovePageY = e.touches[0].pageY
+			let index = parseInt(this.touch.deltaIndex) + Math.floor((targetMovePageY - this.touch.targetStartPageY) / (target.clientHeight))
+			this.$refs.scrollWrapper.scroll.scrollToElement(this.$refs.itemsGroup[index], 500)
+		},
+		//累计高度
+		_countHeights() {
+			this.$nextTick(() => {
+				let list = this.$refs.itemsGroup
+				if(list) {
+					for(let i = 0; i < list.length; i++) {
+						let height = list[i].offsetHeight
+						if(this.heightArr[i - 1]) {
+							height = this.heightArr[i - 1] + height
+						}
+						this.heightArr.push(height)
+					}
+					this.heightArr.unshift(0)
+				}
+			})
+		},
+		//监听滚动时间
+		scroll(pos) {
+			let scrollY = -(pos.y)
+			this.heightArr.forEach((item, index, arr) => {
+				if(scrollY > item && scrollY < arr[index + 1]) {
+					this.isHeightLightIndex = index
+				}
+			})
 		}
 	}
 }
@@ -148,4 +197,6 @@ export default {
 			text-align center
 			line-height 0.30rem
 			font-size 0.24rem
+		.heightLight
+			color green
 </style>
