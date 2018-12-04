@@ -9,12 +9,15 @@ import VueLazyload from 'vue-lazyload'
 import './assets/styles/reset.css'
 import './assets/styles/border.css'
 import 'swiper/dist/css/swiper.css'
+// animate.css
+import animated from 'animate.css'
 
 Vue.config.productionTip = false
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueLazyload, {
 	loading: require('@/assets/images/default.png')
 })
+Vue.use(animated)
 
 new Vue({
   router,

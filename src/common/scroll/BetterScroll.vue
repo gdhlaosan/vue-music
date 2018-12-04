@@ -41,9 +41,9 @@
 					click: this.click
 				})
 				if(this.listenScroll) {
+					let that = this
 					this.scroll.on('scroll', (pos) => {
-						// this.$emit('scroll', pos)
-						console.log(111)
+						that.$emit('scroll', pos)
 					})
 				}
 			},

@@ -15,7 +15,6 @@
 	import CommonSwiper from '@/common/swiper/CommonSwiper'
 	import RecommendList from './components/RecommendList'
 
-
 	export default {
 		name: 'HomeRecommend',
 		components: {
@@ -23,27 +22,27 @@
 			RecommendList,
 			BetterScroll
 		},
-		data() {
+		data () {
 			return {
 				sliderList: [],
 				discList: []
 			}
 		},
-		mounted() {
+		mounted () {
 			this._getRecommendInfo()
 			this._getDiscList()
 		},
 		methods: {
-			//获取轮播图数据
-			_getRecommendInfo() {
+			// 获取轮播图数据
+			_getRecommendInfo () {
 				getRecommendInfo().then((res) => {
 					if (res.code === ERR_OK) {
 						this.sliderList = res.data.slider
 					}
 				})
 			},
-			//获取歌单数据
-			_getDiscList() {
+			// 获取歌单数据
+			_getDiscList () {
 				getDiscList().then((res) => {
 					if (res.code === ERR_OK) {
 						this.discList = res.data.list

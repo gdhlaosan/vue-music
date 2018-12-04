@@ -1,15 +1,15 @@
 <template>
 	<div class="wrapper">
 		<swiper :options="swiperOption" v-if="sliderList.length">
-		    <swiper-slide 
-		    	v-for="item in sliderList" 
-		    	:key="item.id"
-		    >
-		    	<a :href="item.linkUrl">
-		    		<img class="item-img" :src="item.picUrl">
-		    	</a>
-		    </swiper-slide>
-	    	<div class="swiper-pagination" slot="pagination"></div>
+			<swiper-slide
+				v-for="item in sliderList"
+				:key="item.id"
+			>
+				<a :href="item.linkUrl">
+					<img class="item-img" :src="item.picUrl">
+				</a>
+			</swiper-slide>
+		<div class="swiper-pagination" slot="pagination"></div>
 		</swiper>
 	</div>
 </template>

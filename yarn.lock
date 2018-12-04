@@ -1080,6 +1080,11 @@ amdefine@>=0.0.4:
   resolved "http://registry.npm.taobao.org/amdefine/download/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
+animate.css@^3.7.0:
+  version "3.7.0"
+  resolved "http://r.cnpmjs.org/animate.css/download/animate.css-3.7.0.tgz#5de25d1ee5fba11ba6a1e2c4fa568f512eb7d4da"
+  integrity sha1-XeJdHuX7oRumoeLE+laPUS631No=
+
 ansi-colors@^3.0.0:
   version "3.2.1"
   resolved "http://registry.npm.taobao.org/ansi-colors/download/ansi-colors-3.2.1.tgz#9638047e4213f3428a11944a7d4b31cba0a3ff95"
@@ -1400,10 +1405,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-better-scroll@^1.13.2:
-  version "1.13.2"
-  resolved "http://r.cnpmjs.org/better-scroll/download/better-scroll-1.13.2.tgz#31e6e088cf2d23ce48e52fad6cc59134ffeb2f56"
-  integrity sha1-MebgiM8tI85I5S+tbMWRNP/rL1Y=
+better-scroll@^0.1.15:
+  version "0.1.15"
+  resolved "http://r.cnpmjs.org/better-scroll/download/better-scroll-0.1.15.tgz#17bd5fc175d2fb422d370163c8ab9e28729b2fc1"
+  integrity sha1-F71fwXXS+0ItNwFjyKueKHKbL8E=
   dependencies:
     babel-runtime "^6.0.0"
 
