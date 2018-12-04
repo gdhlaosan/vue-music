@@ -50,7 +50,7 @@ const HOT_LIST_LEN = 10
 
 export default {
 	name: 'HomeSinger',
-	data () {
+	data() {
 		return {
 			singerList: [], // 歌手列表
 			touch: {},
