@@ -1,10 +1,30 @@
 <template>
-	<div class="detail">高东浩</div>
+	<div class="detail"></div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { getSingerDetail } from '@/api/singer'
 export default {
-	name: 'CommonDetail'
+	name: 'CommonDetail',
+	computed: {
+		singer () {
+			return this.singer
+		},
+		...mapState({
+			singer: 'singer'
+		})
+	},
+	mounted () {
+		this._getSingerDetail()
+	},
+	methods: {
+		_getSingerDetail () {
+			getSingerDetail(this.singer.id).then((res) => {
+				console.log(res)
+			})
+		}
+	}
 }
 </script>
 

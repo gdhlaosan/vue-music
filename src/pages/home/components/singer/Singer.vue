@@ -44,13 +44,14 @@ import { getSingerList } from '@/api/singer'
 import { ERR_OK } from '@/api/config'
 import Singer from '@/assets/class/index'
 import Scroll from '@/common/scroll/BetterScroll'
+import { mapMutations } from 'vuex'
 
 const HOT_NAME = '热门'
 const HOT_LIST_LEN = 10
 
 export default {
 	name: 'HomeSinger',
-	data() {
+	data () {
 		return {
 			singerList: [], // 歌手列表
 			touch: {},
@@ -176,7 +177,11 @@ export default {
 			this.$router.push({
 				path: `singer/${singer.id}`
 			})
-		}
+			this.emitSinger(singer)
+		},
+		...mapMutations({
+			emitSinger: 'slectSinger'
+		})
 	}
 }
 </script>
@@ -226,4 +231,6 @@ export default {
 		font-size 0.24rem
 	.heightLight
 		color blue
+.animated
+	animation-duration 0.3s
 </style>
