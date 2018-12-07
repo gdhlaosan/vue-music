@@ -1,18 +1,28 @@
 <template>
-	<div class="detail"></div>
+	<detail-list :songs="songs" :title="singer.name" :avatar="singer.avatar"></detail-list>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import { getSingerDetail } from '@/api/singer'
+import { ERR_OK } from '@/api/config'
+import { createSong } from '@/assets/class/song'
+
+import DetailList from '@/common/detailList/DetailList'
+
 export default {
 	name: 'CommonDetail',
+	data () {
+		return {
+			songs: []
+		}
+	},
+	components: {
+		DetailList
+	},
 	computed: {
-		singer () {
-			return this.singer
-		},
-		...mapState({
-			singer: 'singer'
+		...mapGetters({
+			singer: 'setSinger'
 		})
 	},
 	mounted () {
@@ -21,20 +31,22 @@ export default {
 	methods: {
 		_getSingerDetail () {
 			getSingerDetail(this.singer.id).then((res) => {
-				console.log(res)
+				if (res.code === ERR_OK) {
+					this.songs = this._normalizeSongs(res.data.list)
+				}
 			})
+		},
+		_normalizeSongs (list) {
+			let ret = []
+			list.forEach((item, index) => {
+				ret.push(createSong(item.musicData))
+			})
+			return ret
 		}
 	}
 }
 </script>
 
 <style lang="stylus" scoped>
-.detail
-	position fixed
-	top 0
-	left 0
-	bottom 0
-	right 0
-	z-index 200
-	background-color #fff
+
 </style>
